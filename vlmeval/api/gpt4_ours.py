@@ -53,7 +53,7 @@ class GPT4Ours(BaseAPI):
         print(self.openai_key)
         assert img_size > 0 or img_size == -1
         self.img_size = img_size
-        assert img_detail in ['high', 'low']
+        assert img_detail in ['high', 'low', 'auto']
         self.img_detail = img_detail
 
         self.vision = False
@@ -79,7 +79,7 @@ class GPT4Ours(BaseAPI):
                 elif msg['type'] == 'image':
                     from PIL import Image
                     img = Image.open(msg['value'])
-                    import pdb; pdb.set_trace()
+                    # import pdb; pdb.set_trace()
                     b64 = encode_image_to_base64(img, target_size=self.img_size)
                     img_struct = dict(url=f'data:image/jpeg;base64,{b64}', detail=self.img_detail)
                     content_list.append(dict(type='image_url', image_url=img_struct))
@@ -119,8 +119,8 @@ class GPT4Ours(BaseAPI):
         )
         response = requests.post(self.api_base, headers=headers, json=payload,
                                  timeout=self.timeout * 1.1)
-        print(response)
-        import time; time.sleep(10)
+        # print(response)
+        # import time; time.sleep(10)
         ret_code = response.status_code
         ret_code = 0 if (200 <= int(ret_code) < 300) else ret_code
         answer = self.fail_msg
