@@ -5,7 +5,7 @@ from vlmeval.evaluate.misc import build_judge
 from vlmeval.utils import can_infer, track_progress_rich, TSVDataset
 from vlmeval.smp import *
 import numpy as np
-
+from vlmeval.api.gpt4_ours import GPT4Ours
 INTERNAL = os.environ.get('INTERNAL', 0)
 
 # abbrs = {
@@ -306,22 +306,24 @@ def multiple_choice_eval(eval_file, dataset='default', **judge_kwargs):
 
     rd.seed(2680)
     suffix = eval_file.split('.')[-1]
-    model = judge_kwargs['model']
-    assert model in ['chatgpt-0613', 'exact_matching', 'gpt-4-0125']
-    name_str_map = {
-        'chatgpt-0613': 'openai',
-        'gpt-4-0125': 'gpt4'
-    }
-    name_str = name_str_map[model] if model in name_str_map else model
+    model = GPT4Ours()
 
-    if model == 'exact_matching':
-        model = None
-    else:
-        if INTERNAL or gpt_key_set():
-            model = build_judge(**judge_kwargs)
-        else:
-            logger.error('OPENAI_API_KEY is not set properly, will use exact matching for evaluation')
-            model = None
+    # model = judge_kwargs['model']
+    # assert model in ['chatgpt-0613', 'exact_matching', 'gpt-4-0125']
+    # name_str_map = {
+    #     'chatgpt-0613': 'openai',
+    #     'gpt-4-0125': 'gpt4'
+    # }
+    # name_str = name_str_map[model] if model in name_str_map else model
+
+    # if model == 'exact_matching':
+    #     model = None
+    # else:
+    #     if INTERNAL or gpt_key_set():
+    #         model = build_judge(**judge_kwargs)
+    #     else:
+    #         logger.error('OPENAI_API_KEY is not set properly, will use exact matching for evaluation')
+    #         model = None
 
     logger.info(f'Evaluating {eval_file}')
     result_file = eval_file.replace(f'.{suffix}', f'_{name_str}_result.pkl')
