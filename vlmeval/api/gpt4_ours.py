@@ -50,6 +50,7 @@ class GPT4Ours(BaseAPI):
         env_key = os.environ.get('GPT4_KEY', '')
         openai_key = env_key if key is None else key
         self.openai_key = openai_key
+        print(self.openai_key)
         assert img_size > 0 or img_size == -1
         self.img_size = img_size
         assert img_detail in ['high', 'low']
@@ -62,8 +63,6 @@ class GPT4Ours(BaseAPI):
 
         super().__init__(wait=wait, retry=retry, system_prompt=system_prompt, verbose=verbose, **kwargs)
         self.api_base = api_bases[model]
-
-
 
     # inputs can be a lvl-2 nested list: [content1, content2, content3, ...]
     # content can be a string or a list of image & text
