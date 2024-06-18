@@ -79,6 +79,7 @@ class GPT4Ours(BaseAPI):
                 elif msg['type'] == 'image':
                     from PIL import Image
                     img = Image.open(msg['value'])
+                    import pdb; pdb.set_trace()
                     b64 = encode_image_to_base64(img, target_size=self.img_size)
                     img_struct = dict(url=f'data:image/jpeg;base64,{b64}', detail=self.img_detail)
                     content_list.append(dict(type='image_url', image_url=img_struct))
