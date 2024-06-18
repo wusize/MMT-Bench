@@ -326,7 +326,7 @@ def multiple_choice_eval(eval_file, dataset='default', **judge_kwargs):
     #         model = None
 
     logger.info(f'Evaluating {eval_file}')
-    result_file = eval_file.replace(f'.{suffix}', f'_{name_str}_result.pkl')
+    result_file = eval_file.replace(f'.{suffix}', f'_gpt4o_result.pkl')
     result = {}
     if osp.exists(result_file):
         result = load(result_file)
@@ -412,8 +412,8 @@ def multiple_choice_eval(eval_file, dataset='default', **judge_kwargs):
         data_main['split'] = [split_map[i] for i in indices]
 
     # load split
-    dump(data_main, eval_file.replace(f'.{suffix}', f'_{name_str}_result.{suffix}'))
-    data_main = load(eval_file.replace(f'.{suffix}', f'_{name_str}_result.{suffix}'))
+    dump(data_main, eval_file.replace(f'.{suffix}', f'_gpt4o_result.{suffix}'))
+    data_main = load(eval_file.replace(f'.{suffix}', f'_gpt4o_result.{suffix}'))
 
     acc = report_acc(data_main)
     score_file = eval_file.replace(f'.{suffix}', '_acc.csv')
