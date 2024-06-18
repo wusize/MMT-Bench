@@ -117,7 +117,7 @@ class GPT4Ours(BaseAPI):
         )
         response = requests.post(self.api_base, headers=headers, json=payload,
                                  timeout=self.timeout * 1.1)
-        print(response)
+        # print(response)
         # import time; time.sleep(10)
         ret_code = response.status_code
         ret_code = 0 if (200 <= int(ret_code) < 300) else ret_code
