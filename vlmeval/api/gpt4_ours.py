@@ -90,7 +90,7 @@ class GPT4Ours(BaseAPI):
         return input_msgs
 
     def generate_inner(self, inputs, **kwargs) -> str:
-        print(inputs)
+        # print(inputs)
         input_msgs = self.prepare_inputs(inputs)
         temperature = kwargs.pop('temperature', self.temperature)
         max_tokens = kwargs.pop('max_tokens', self.max_tokens)
@@ -112,7 +112,8 @@ class GPT4Ours(BaseAPI):
             max_tokens=max_tokens,
             n=1,
             temperature=temperature,
-            **kwargs)
+            # **kwargs
+        )
         response = requests.post(self.api_base, headers=headers, json=payload,
                                  timeout=self.timeout * 1.1)
         print(response)
