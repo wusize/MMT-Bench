@@ -90,8 +90,9 @@ class GPT4Ours(BaseAPI):
         return input_msgs
 
     def generate_inner(self, inputs, **kwargs) -> str:
-        print(inputs)
+        # print(inputs)
         # inputs += [{'type': 'text', 'value': 'Reply with single letters only.'}]
+        import pdb; pdb.set_trace()
         input_msgs = self.prepare_inputs(inputs)
         temperature = kwargs.pop('temperature', self.temperature)
         max_tokens = kwargs.pop('max_tokens', self.max_tokens)
